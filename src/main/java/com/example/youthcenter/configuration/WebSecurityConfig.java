@@ -1,7 +1,12 @@
-package com.example.youthcenter;
+package com.example.youthcenter.configuration;
 
-import org.springframework.context.annotation.Configuration;
-@Configuration
-public class WebSecurityConfig  {
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+
+@EnableWebSecurity
+@RequiredArgsConstructor
+public class WebSecurityConfig {
 
 }
