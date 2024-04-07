@@ -10,7 +10,7 @@
     <header th:insert="~{blocks/header.html :: header}"></header>
     <div class="container mt-5 mb-5">
         <h3 class="alert alert-info">Про що буде ваш допис?</h3>
-        <form th:action="'/users/' + ${userId} + '/post/add'" method="post" enctype="multipart/form-data">
+        <form th:action="'/my/users/' + ${userId} + '/post/add'" method="post" enctype="multipart/form-data">
             <select name="type" class="form-select">
                 <option th:each="permission : ${permissions}"
                         th:value="${permission}"

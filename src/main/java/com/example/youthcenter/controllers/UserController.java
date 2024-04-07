@@ -24,7 +24,7 @@ public class UserController {
     public Gender[] getGenders(){
         return Gender.values();
     }
-    @GetMapping("/users")
+    @GetMapping("/my/users")
     public String users(@RequestParam(name = "query", required = false) String query, Model model){
         List<User> users;
 //        if (query != null && !query.isEmpty()) {

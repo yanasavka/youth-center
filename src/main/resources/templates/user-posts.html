@@ -11,17 +11,17 @@
 <header th:insert="~{blocks/header.html :: header}">
 </header>
 <div class="container mt-2">
-    <a href="/users" class="btn btn-close close-link" aria-label="Close"></a><br>
+    <a href="/my/users" class="btn btn-close close-link" aria-label="Close"></a><br>
     <h2 th:text="${user.name} + ' ' + ${user.surname} + ' Posts'"></h2>
         <div class="p-3" th:each="post, postIndex : ${posts}" th:id="'post-'+${post.id}">
             <div th:each="image : ${post.images}" class="images">
-                <img class="post-img" th:src="'/images/' + ${image.id}" alt="" height="260px">
+                <img class="post-img" th:src="'/my/images/' + ${image.id}" alt="" height="260px">
             </div>
             <p th:text="${post.content}"></p>
             <p class="text-muted"><b>Дата створення:</b> <small th:text="${#temporals.format(post.createdAt, 'dd-MM-yyyy HH:mm:ss')}"></small></p>
             <div class="my-btn-group">
-                <a class="btn btn-success" th:href="'/posts/' + ${post.id} + '/edit'">Редагувати</a>
-                <form th:action="'/posts/' + ${post.id} + '/remove'" method="post">
+                <a class="btn btn-success" th:href="'/my/posts/' + ${post.id} + '/edit'">Редагувати</a>
+                <form th:action="'/my/posts/' + ${post.id} + '/remove'" method="post">
                     <button class="btn btn-dark" type="submit">Видалити</button>
                 </form>
             </div>

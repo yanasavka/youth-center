@@ -12,7 +12,7 @@
 </header>
 <div class="container mt-2">
     <h3 class="alert alert-info">Користувачі</h3>
-    <form action="/users" method="get">
+    <form action="/my/users" method="get">
         Знайти користувача <input type="text" name="query">
         <button type="submit">Шукати</button>
     </form>
@@ -20,8 +20,8 @@
         <p th:text="'Ім\'я - ' + ${el.name}"></p>
         <p th:text="'Прізвище - ' + ${el.surname}"></p>
         <div class="my-btn-group">
-            <a th:href="'/users/' + ${el.id} + '/posts'" class="btn btn-warning">Усі дописи</a>
-            <a class="btn btn-primary" th:href="'/users/' + ${el.id} + '/post/add'">Створити допис</a>
+            <a th:href="'/my/users/' + ${el.id} + '/posts'" class="btn btn-warning">Усі дописи</a>
+            <a class="btn btn-primary" th:href="'/my/users/' + ${el.id} + '/post/add'">Створити допис</a>
         </div>
     </div>
 </div>

@@ -28,7 +28,7 @@ public class MainController {
     private final PostRepository postRepository;
     private final PostService postService;
 
-    @GetMapping("/")
+    @GetMapping("/home")
     public String home(Model model){
         return "home";
     }

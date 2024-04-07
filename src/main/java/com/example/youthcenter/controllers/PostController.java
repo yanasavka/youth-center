@@ -30,7 +30,7 @@ public class PostController {
         return Permission.values();
     }
 
-    @GetMapping("/users/{userId}/posts")
+    @GetMapping("/my/users/{userId}/posts")
     public String getUserPosts(@PathVariable(value = "userId") Long userId, Model model) {
         Optional<User> userOptional = userRepository.findById(userId);
         userOptional.ifPresent(user -> {
@@ -40,13 +40,13 @@ public class PostController {
         });
         return "user-posts";
     }
-    @GetMapping("/users/{userId}/post/add")
+    @GetMapping("/my/users/{userId}/post/add")
     public String addPostForm(@PathVariable(value = "userId") Long userId, Model model){
         model.addAttribute("userId", userId);
         return "post-add";
     }
 
-    @PostMapping("/users/{userId}/post/add")
+    @PostMapping("/my/users/{userId}/post/add")
     public String postAdding(@PathVariable(value = "userId") Long userId,
                              Post post,
                              @RequestParam("file") MultipartFile[] files,
@@ -64,7 +64,7 @@ public class PostController {
 
         return "redirect:/users";
     }
-    @GetMapping("/posts/{postId}/edit")
+    @GetMapping("/my/posts/{postId}/edit")
     public String editPostForm(Model model, @PathVariable(value = "postId") Long postId){
         Optional<Post> postOptional = postRepository.findById(postId);
         Post post = postOptional.get();
@@ -89,7 +89,7 @@ public class PostController {
         rv.setUrl("/users/{userId}/posts");
         return rv;
     }
-    @PostMapping("/posts/{postId}/remove")
+    @PostMapping("/my/posts/{postId}/remove")
     public RedirectView deletePost(@PathVariable(value = "postId") Long postId,
                                    RedirectAttributes redirectAttributes){
         Post post = postRepository.findById(postId).orElseThrow();
@@ -98,7 +98,7 @@ public class PostController {
         redirectAttributes.addAttribute("userId", userId);
         RedirectView rv = new RedirectView();
         rv.setContextRelative(true);
-        rv.setUrl("/users/{userId}/posts");
+        rv.setUrl("/my/users/{userId}/posts");
         return rv;
     }
 

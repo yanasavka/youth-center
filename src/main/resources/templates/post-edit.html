@@ -10,7 +10,7 @@
 <body>
 <header th:insert="~{blocks/header.html :: header}"></header>
 <div class="container mt-5 mb-5">
-    <a th:href="'/users/'+${post.getUser().getId()+'/posts'}" class="btn btn-close close-link" aria-label="Close"></a>
+    <a th:href="'/my/users/'+${post.getUser().getId()+'/posts'}" class="btn btn-close close-link" aria-label="Close"></a>
     <h3 class="alert alert-info">Хочеш щось змінити?</h3>
     <div>
         <form method="post">
