@@ -2,8 +2,6 @@ package com.example.youthcenter.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -12,7 +10,7 @@ import java.util.*;
 @Entity
 @Data
 @Table(name = "users")
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -62,16 +60,8 @@ public class User implements UserDetails {
     private List<Post> posts = new ArrayList<>();
 
     @PrePersist
-    public void calculateFullName() {
+    public void calculateFields() {
         this.fullName = name + " " + surname;
-    }
-    public User() {}
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-        calculateAge();
-    }
-    private void calculateAge() {
         if (dateOfBirth != null) {
             LocalDate currentDate = LocalDate.now();
             this.age = Period.between(dateOfBirth, currentDate).getYears();
@@ -79,34 +69,10 @@ public class User implements UserDetails {
             this.age = 0;
         }
     }
-    // security
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
-    }
+    public User() {}
+//    @PrePersist
+//    private void calculateAge() {
+//
+//    }
 
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return active;
-    }
 }

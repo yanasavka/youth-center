@@ -7,6 +7,7 @@ import com.example.youthcenter.repositories.PostRepository;
 import com.example.youthcenter.repositories.UserRepository;
 import com.example.youthcenter.services.PostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,7 @@ public class PostController {
     }
 
     @GetMapping("/my/users/{userId}/posts")
+    //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String getUserPosts(@PathVariable(value = "userId") Long userId, Model model) {
         Optional<User> userOptional = userRepository.findById(userId);
         userOptional.ifPresent(user -> {
@@ -62,7 +64,7 @@ public class PostController {
             postService.addPost(post, files);
         }
 
-        return "redirect:/users";
+        return "redirect:/my/users";
     }
     @GetMapping("/my/posts/{postId}/edit")
     public String editPostForm(Model model, @PathVariable(value = "postId") Long postId){
@@ -73,12 +75,13 @@ public class PostController {
     }
     @PostMapping("/posts/{postId}/edit")
     public RedirectView editPost(@PathVariable(value = "postId") Long postId,
-                                 @RequestParam String content, @RequestParam String type,
+                                 Post post,
+                                 //@RequestParam String content, @RequestParam String type,
                                  RedirectAttributes redirectAttributes){
-        Post post = postRepository.findById(postId).orElseThrow();
-        post.setContent(content);
-        Permission permission = Permission.valueOf(type.toUpperCase());
-        post.setType(permission);
+        post = postRepository.findById(postId).orElseThrow();
+//        post.setContent(content);
+//        Permission permission = Permission.valueOf(type.toUpperCase());
+//        post.setType(permission);
         post.setUpdatedAt(LocalDateTime.now());
 
         postRepository.save(post);

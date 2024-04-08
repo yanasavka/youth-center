@@ -3,7 +3,9 @@ package com.example.youthcenter.controllers;
 import com.example.youthcenter.models.Gender;
 import com.example.youthcenter.models.User;
 import com.example.youthcenter.repositories.UserRepository;
+import com.example.youthcenter.services.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +18,15 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor
 public class UserController {
     private final UserRepository userRepository;
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserRepository userRepository, UserService userService) {
+        this.userRepository = userRepository;
+        this.userService = userService;
+    }
 
     @ModelAttribute("genders")
     public Gender[] getGenders(){
@@ -35,31 +43,17 @@ public class UserController {
         model.addAttribute("users", users);
         return "users";
     }
-    @GetMapping("/reg")
+    @GetMapping("/registration")
     public String registration(Model model){
         return "regForm";
     }
-    @PostMapping("/reg")
-    public String authorization(@RequestParam String name,
-                                @RequestParam String surname,
-                                @RequestParam String sex,
-                                @RequestParam LocalDate dateOfBirth,
-                                @RequestParam String email,
-                                @RequestParam String password,
-                                Model model, RedirectAttributes redirectAttributes){
-        if (userRepository.existsByEmail(email)) {
-            redirectAttributes.addFlashAttribute("error", "Користувач з цією електронною поштою вже існує");
-            return "redirect:/reg";
-        }
-        User user = new User();
-        Gender gender = Gender.valueOf(sex);
-        user.setName(name);
-        user.setSurname(surname);
-        user.setGender(gender);
-        user.setDateOfBirth(dateOfBirth);
-        user.setEmail(email);
-        user.setPassword(password);
-        userRepository.save(user);
-        return "redirect:/users";
+    @PostMapping("/registration")
+    public String authorization(User user, RedirectAttributes redirectAttributes){
+//        if (userRepository.existsByEmail(email)) {
+//            redirectAttributes.addFlashAttribute("error", "Користувач з цією електронною поштою вже існує");
+//            return "redirect:/reg";
+//        }
+        userService.createUser(user);
+        return "redirect:/my/users";
     }
 }

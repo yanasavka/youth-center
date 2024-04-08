@@ -1,7 +1,6 @@
 .close-link{
-    position: absolute;
-    right: 5px;
-    top: 5px;
+   color: red;
+    text-decoration: none;
 }
 .my-btn-group{
     display: inline-flex;

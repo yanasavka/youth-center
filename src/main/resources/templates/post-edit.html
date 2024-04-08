@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Youth Center</title>
-    <link rel="stylesheet" href="global.css">
+    <link rel="stylesheet" th:href="@{../static/css/global.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
 <header th:insert="~{blocks/header.html :: header}"></header>
 <div class="container mt-5 mb-5">
-    <a th:href="'/my/users/'+${post.getUser().getId()+'/posts'}" class="btn btn-close close-link" aria-label="Close"></a>
+    <a th:href="'/my/users/'+${post.getUser().getId()+'/posts'}" class="btn close-link d-flex justify-content-end">Назад</a>
     <h3 class="alert alert-info">Хочеш щось змінити?</h3>
     <div>
         <form method="post">
