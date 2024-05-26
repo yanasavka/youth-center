@@ -4,30 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Youth Center</title>
-    <link rel="stylesheet" th:href="@{../static/css/global.css}">
+    <link rel="stylesheet" href="/static/css/global.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-<header th:insert="~{blocks/header.html :: header}"></header>
-<div class="container mt-5 mb-5">
-    <a th:href="'/my/users/'+${post.getUser().getId()+'/posts'}" class="btn close-link d-flex justify-content-end">Назад</a>
-    <h3 class="alert alert-info">Хочеш щось змінити?</h3>
-    <div>
-        <form method="post">
-            <select name="type" class="form-select">
-                <option th:each="permission : ${permissions}"
-                        th:value="${permission}"
-                        th:text="${permission.getType()}"
-                        th:selected="${permission == post.type}">></option>
-            </select>
-            <br>
-            <textarea th:text="${post.content}" name="content" class="form-control"></textarea>
-            <br>
-            <button type="submit" class="btn btn-success">Оновити</button>
-        </form>
+<div class="wrapper">
+    <div th:replace="~{blocks/header-for-participant.html :: header-participant}"></div>
+    <div class="container mt-5 mb-5">
+        <a th:href="'/my/users/'+${post.getUser().getId()+'/posts'}" class="btn close-link d-flex justify-content-end">Назад</a>
+        <h3 class="alert alert-info">Хочеш щось змінити?</h3>
+        <div>
+            <form method="post" th:object="${post}" enctype="multipart/form-data">
+                <input name="id" type="hidden" th:field="*{id}" />
+                <input type="hidden" name="user" th:field="*{user.id}">
+                <select name="type"  class="form-select">
+                    <option th:each="permission : ${permissions}" th:field="*{type}"
+                            th:value="${permission}"
+                            th:text="${permission.getType()}"
+                            th:selected="${permission == post.type}">></option>
+                </select>
+                <br>
+                <input type="file" name="file" multiple id="fileImages" accept="image/*">
+                <div id="selectedImages">
+                    <th:block th:each="image : ${post.getImages()}">
+                        <img th:src="'/my/images/' + ${image.id}" alt="Image" height="260px">
+                    </th:block>
+                </div>
+                <br>
+                <textarea th:text="${post.content}" name="content" th:field="*{content}" class="form-control"></textarea>
+                <br>
+                <button type="submit" class="btn btn-success">Оновити</button>
+            </form>
+        </div>
     </div>
+    <div th:replace="~{blocks/footer.html :: footer}"></div>
 </div>
-<div th:insert="~{blocks/footer.html :: footer}"></div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractAuthenticationFilterConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
@@ -30,16 +31,22 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer :: disable)
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/about", "/","/registration").permitAll()
-                        .requestMatchers("/my/**").authenticated())
+                        .requestMatchers("/about", "/home","/registration","/",
+            "/static/**", "/static/img/**", "/static/js/**", "/static/css/**", "/static/webjars/**").permitAll()
+                        .anyRequest().authenticated())
+               // .requestMatchers("/my/**").authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login")
+                        //.loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/my",true)
                         .permitAll()
                 )
+
                 .logout(LogoutConfigurer::permitAll)
                 //.formLogin(AbstractAuthenticationFilterConfigurer :: permitAll)
                 .build();
     }
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

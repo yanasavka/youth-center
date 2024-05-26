@@ -1,12 +1,17 @@
 package com.example.youthcenter.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-@Data
+@Setter
+@Getter
 @Entity
 @Table(name = "comments")
+@AllArgsConstructor
 public class Comment {
 
     @Id

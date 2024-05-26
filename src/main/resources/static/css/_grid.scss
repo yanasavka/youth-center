@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Anybody:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap');
+/*variables*/
+$main-button-color: rgb(167, 168, 173);
+$font-nav-header: "Anybody", sans-serif;
+$light-grey: #E5E2E2;
+/*верхні елементи сторінок*/
+.wrapper{
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.main{
+  flex: 1 1 auto;
+}
+
+.header-nav{
+  a{
+    font-family: $font-nav-header;
+    font-weight: 700;
+    font-size: 16px;
+    color: #3F3F3F;
+    text-align: right;
+    text-decoration: none;
+    &:hover{
+      color: #6e6d6d;
+    }
+  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 55px;
+}
+
+#query{
+  border-bottom: 1px solid #222267;
+}
+
+.sidebar-container{
+  position: relative;
+}
+.sidebar-participant{
+  position: absolute;
+  top: 0;
+  left: -250px; /* Початкове приховане положення */
+  transition: all 0.3s ease-in-out; /* Анімація для відображення/приховування */
+  width: 250px;
+  height: 100%;
+  background-color: $light-grey;
+}
+.sidebar-hidden{
+  width: 48px;
+  height: 100%;
+  background-color: $light-grey;
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.rotate {
+  transform: rotate(180deg); /* Обертання на 180 градусів */
+}
+.sidebar-participant:not(.sidebar-participant-hidden) {
+  display: block; /* Show the sidebar participant */
+  /* Adjust position, width, etc. for expanded state */
+}
+
+#login-form{
+  text-align: center;
+  form{
+    margin: 0 auto;
+  }
+}
+
+.sidebarMenu{
+  background-color: #acacac;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+}
+.form-group {
+  margin-bottom: 1.5rem;
+}
+.btn-primary {
+  background-color: #007bff;
+  border-color: #007bff;
+}
+.btn-primary:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+.my-btn-group{
+  display: inline-flex;
+  flex-direction: row;
+}
+.file-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.file-input:hover {
+  background-color: #ddd;
+}
+
+.file-input-label {
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.file-input-icon {
+  width: 20px;
+  height: 20px;
+  fill: #ccc;
+}
+
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.image-preview img {
+  width: 100px;
+  height: 100px;
+  margin: 5px;
+  object-fit: cover;
+}
+
+.image-preview button {
+  margin-left: 5px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.header-div{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 390px;
+}
+header{
+  background-color: $light-grey;
+  display: flex;
+  padding: 49px 114px 46px 102px;
+  justify-content: center;
+  align-items: center;
+}
+.image-preview button:hover {
+  color: red;
+}
+.logo-header-container{
+  a{
+    text-decoration: none;
+  }
+}
+.logo-header{
+  display: inline-flex;
+  flex-direction: row;
+  width: 225px;
+  height: 96px;
+  align-items: center;
+  gap: 10px;
+}
+.logo-mc{
+  span{
+    font-size: 48px;
+    font-family: "Bruno Ace", sans-serif;
+    color: #fff;
+  }
+  display: flex;
+  padding: 19px 16px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 29px;
+  background-color: #505050;
+}
+.logo-title{
+  font-size: 16px;
+  text-align: right;
+  font-family: $font-nav-header;
+  color: #3F3F3F;
+  font-weight: 700;
+}
+footer{
+  background-color: #515151;
+  padding: 30px;
+}
+.footer-div{
+  display: flex;
+}
+.left-side-footer{
+  p{
+    color: white;
+  }
+}

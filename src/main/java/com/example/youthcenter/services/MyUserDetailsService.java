@@ -13,18 +13,15 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MyUserDetailsService implements UserDetailsService {
+
     @Autowired
-    private UserRepository userRepository;
-//    public MyUserDetailsService(){}
-//    @Autowired
-//    public MyUserDetailsService(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-//    }
+    private UserRepository repository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> user = userRepository.findByEmail(email);
+        Optional<User> user = repository.findByEmail(email);
         return user.map(MyUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException(email + " not found"));
     }

@@ -1,31 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Youth Center</title>
-    <link rel="stylesheet" th:href="@{../static/css/global.css}">
+    <link rel="stylesheet" href="/static/css/global.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-    <header th:insert="~{blocks/header.html :: header}"></header>
+<div class="wrapper">
+    <div th:replace="~{blocks/header-for-participant.html :: header-participant}"></div>
     <div class="container mt-5 mb-5">
         <h3 class="alert alert-info">Про що буде ваш допис?</h3>
-        <form th:action="'/my/users/' + ${userId} + '/post/add'" method="post" enctype="multipart/form-data">
+        <form th:action="'/my/users/'+${userId}+'/post/add'" method="post" enctype="multipart/form-data">
             <select name="type" class="form-select">
                 <option th:each="permission : ${permissions}"
                         th:value="${permission}"
                         th:text="${permission.getType()}"></option>
             </select>
-            <br>
-            <input type="file" name="file" multiple>
-            <br>
+            <input type="file" name="file" accept="image/*" multiple>
+            <!--                <span class="file-input-label">Виберіть зображення</span>-->
+            <!--                <svg class="file-input-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
+            <!--                    <path d="M10 10H6L8 14L12 10H8Z" />-->
+            <!--                    <path d="M2 10C2 6.68629 4.68629 4 8 4C11.3137 4 14 6.68629 14 10C14 13.3137 11.3137 16 8 16C4.68629 16 2 13.3137 2 10Z" />-->
+            <!--                </svg>-->
+            <!--            <div class="image-preview"></div>-->
+
             <textarea name="content" class="form-control"></textarea>
             <br>
             <button type="submit" class="btn btn-success">Додати допис</button>
         </form>
     </div>
-    <div th:insert="~{blocks/footer.html :: footer}"></div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <div th:replace="~{blocks/footer.html :: footer}"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 </body>
 </html>

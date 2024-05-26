@@ -2,13 +2,17 @@ package com.example.youthcenter.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
 @Entity
-@Data
+@Setter
+@Getter
 @Table(name = "users")
 public class User {
     @Id
@@ -43,7 +47,7 @@ public class User {
     private Integer age;
 
     @Enumerated(EnumType.STRING)
-    @Column()
+    @Column
     private Gender gender;
 
     @ElementCollection(fetch = FetchType.EAGER, targetClass = Role.class)
@@ -52,12 +56,18 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
-//    @JoinColumn(name = "role_id")
-//    @ManyToOne
-//    private Role role;
+    @ManyToMany
+    @JoinTable(
+            name = "volunteers",
+            joinColumns = @JoinColumn(name = "participant_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id"))
+    private List<VolunteerProject> volunteerProjects;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "creator")
+    private List<Resume> resumes = new ArrayList<>();
 
     @PrePersist
     public void calculateFields() {
@@ -70,9 +80,34 @@ public class User {
         }
     }
     public User() {}
-//    @PrePersist
-//    private void calculateAge() {
-//
-//    }
 
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return roles;
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return email;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isAccountNonLocked() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isCredentialsNonExpired() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean isEnabled() {
+//        return active;
+//    }
 }

@@ -1,15 +1,21 @@
 package com.example.youthcenter.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@AllArgsConstructor
 @Setter
 @Getter
 @Entity
 @Table(name = "job_vacancies")
-public class JobVacancies {
+public class JobVacancy {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -34,6 +40,14 @@ public class JobVacancies {
     @Column(nullable = false)
     private Integer views = 0;
 
-    public JobVacancies(){}
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "jobVacancy")
+    private List<Resume> resumes = new ArrayList<>();
+
+    public JobVacancy(){}
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
 }

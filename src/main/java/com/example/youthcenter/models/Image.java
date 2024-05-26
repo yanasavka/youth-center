@@ -2,7 +2,8 @@ package com.example.youthcenter.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "images")
 public class Image {
@@ -25,7 +26,11 @@ public class Image {
     private byte[] bytes;
 
     @ManyToOne
+    @JoinColumn
     private Post post;
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Product product;
 
     public Image(){}
 }
