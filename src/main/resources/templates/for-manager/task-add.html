@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Youth Center</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/static/css/global.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+<div class="wrapper">
+    <div th:replace="~{blocks/header-for-participant.html :: header-participant}"></div>
+    <main class="main main-grid">
+        <div th:replace="~{blocks/sidebar-for-manager.html :: sidebar-manager}"></div>
+        <section class="content task-add">
+            <h3 class="heading3"></h3>
+            <hr>
+            <section class="task-add-flex">
+                <form class="task-add-form" th:action="'/my/volunteer/projects/' + ${volunteerProject.id} + '/tasks/new'" method="post" id="taskForm">
+                    <input type="hidden" name="assignedTo" id="assignedTo">
+                    <div>
+                        <label for="taskTitle">Заголовок завдання:</label>
+                        <input id="taskTitle" placeholder="Заголовок" autofocus name="title" type="text">
+                    </div>
+                    <div>
+                        <label for="taskDes">Суть завдання:</label>
+                        <textarea id="taskDes" name="description"></textarea>
+                    </div>
+                    <div>
+                        <label for="taskDl">Дед-лайн:</label>
+                        <input id="taskDl" name="deadline" type="datetime-local">
+                    </div>
+                    <button type="submit">Зберегти</button>
+                </form>
+<!--                <div class="task-add-user-info">-->
+<!--                    <h5>Інформація про учасника:</h5>-->
+<!--                </div>-->
+            </section>
+        </section>
+    </main>
+    <div th:replace="~{blocks/footer.html :: footer}"></div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('assignedTo').value = new URLSearchParams(window.location.search).get('assignedTo');
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

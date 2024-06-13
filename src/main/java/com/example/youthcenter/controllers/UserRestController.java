@@ -13,8 +13,8 @@ import java.util.List;
 @RestController
 public class UserRestController {
 
-    private UserRepository userRepository;
-    private UserService userService;
+    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
     public UserRestController(UserService userService, UserRepository userRepository) {

@@ -10,22 +10,24 @@
 <body>
 <div class="wrapper">
     <div th:replace="~{blocks/header-for-participant.html :: header-participant}"></div>
-    <div class="container mt-2">
-        <h3 class="alert alert-info">Користувачі</h3>
-        <form action="/my/users" method="get">
-            <label for="query">Знайти користувача </label>
-            <input type="text" name="query" id="query">
-            <button class="btn" type="submit">Шукати</button>
-        </form>
-        <div id="users" class="mb-2" th:each="el : ${users}">
-            <p th:text="'Ім\'я - ' + ${el.name}"></p>
-            <p th:text="'Прізвище - ' + ${el.surname}"></p>
-            <div class="my-btn-group">
-                <a th:href="'/my/users/' + ${el.id} + '/posts'" class="btn btn-warning">Усі дописи</a>
-                <a class="btn btn-primary" th:href="'/my/users/' + ${el.id} + '/post/add'">Створити допис</a>
+    <main class="main main-grid">
+        <div class="container mt-2">
+            <h3 class="alert alert-info">Користувачі</h3>
+            <form action="/my/users" method="get">
+                <label for="query">Знайти користувача </label>
+                <input type="text" name="query" id="query">
+                <button type="submit">Шукати</button>
+            </form>
+            <div id="users" class="mb-2" th:each="el : ${users}">
+                <p th:text="'Ім\'я - ' + ${el.name}"></p>
+                <p th:text="'Прізвище - ' + ${el.surname}"></p>
+                <div class="my-btn-group">
+                    <a th:href="'/my/users/' + ${el.id} + '/posts'" class="btn btn-warning">Усі дописи</a>
+                    <a class="btn btn-primary" href="/my/users/post/add">Створити допис</a>
+                </div>
             </div>
         </div>
-    </div>
+    </main>
     <div th:replace="~{blocks/footer.html :: footer}"></div>
 </div>
 <script th:src="@{../../static/js/main.js}" type="text/javascript"></script>

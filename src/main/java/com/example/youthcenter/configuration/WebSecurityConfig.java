@@ -31,14 +31,14 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer :: disable)
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/about", "/home","/registration","/",
+                        .requestMatchers("/about", "/home","/registration","/", "/contacts",
             "/static/**", "/static/img/**", "/static/js/**", "/static/css/**", "/static/webjars/**").permitAll()
                         .anyRequest().authenticated())
                // .requestMatchers("/my/**").authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login")
                         //.loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/my",true)
+                        .defaultSuccessUrl("/my",false)
                         .permitAll()
                 )
 

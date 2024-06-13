@@ -13,7 +13,12 @@ public class MainController {
 
     @GetMapping("/about")
     public String about(Model model) {
-        return "about";
+        return "for-guests/about";
+    }
+
+    @GetMapping("/contacts")
+    public String contacts(Model model) {
+        return "for-guests/contacts";
     }
 
     @GetMapping("/hello")
@@ -24,11 +29,6 @@ public class MainController {
     @GetMapping("/my")
     public String myHome(Model model, Principal principal) {
         model.addAttribute("name", principal.getName());
-        return "for-participants/my-home";
+        return "my-home";
     }
-
-//    @GetMapping("/login")
-//    public String login(Model model) {
-//        return "login";
-//    }
 }

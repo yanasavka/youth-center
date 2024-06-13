@@ -9,15 +9,40 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 <body>
-<header th:insert="~{blocks/header-for-manager.html :: header-manager}"></header>
-    <div>
-        <h3>Заповніть дані про подію</h3>
-        <form action="" method="post">
+<div class="wrapper">
+    <div th:replace="~{blocks/header-for-manager.html :: header-manager}"></div>
+    <main class="main main-grid">
+        <section class="side-content">
+            <div th:replace="~{blocks/sidebar-for-manager.html :: sidebar-manager}"></div>
+            <div th:replace="~{blocks/sidebar-for-manager.html :: sidebar-hidden}"></div>
+        </section>
+        <section class="content event-add">
+                <h3 class="heading3">Заповніть дані про подію</h3>
+                <hr>
+                <form class="event-add-form" action="" method="post">
+                    <div>
+                        <label for="evTitle">Заголовок:</label>
+                        <input name="title" id="evTitle" placeholder="" type="text">
+                    </div>
+                    <div>
+                        <label for="evDate">Дата і час початку:</label>
+                        <input name="date" id="evDate" type="datetime-local">
+                    </div>
+                    <div>
+                        <label for="evDes">Про що ця подія:</label>
+                        <textarea id="evDes" name="description" ></textarea>
+                    </div>
+                    <div>
+                        <input name="location" type="text">
+                    </div>
+                    <select name="theme" id=""></select>
+                    <button type="submit">Зберегти</button>
+                </form>
 
-        <button type="submit">Зберегти</button>
-        </form>
-    </div>
-    <aside th:insert="~{blocks/sidebar-for-manager :: sidebar-manager}"></aside>
+        </section>
+    </main>
+    <div th:replace="~{blocks/footer.html :: footer}"></div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

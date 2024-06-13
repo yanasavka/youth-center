@@ -10,29 +10,85 @@
 <body>
 <div class="wrapper">
     <div th:replace="~{blocks/header-for-participant.html :: header-participant}"></div>
-    <div class="container mt-5 mb-5">
-        <h3 class="alert alert-info">Про що буде ваш допис?</h3>
-        <form th:action="'/my/users/'+${userId}+'/post/add'" method="post" enctype="multipart/form-data">
-            <select name="type" class="form-select">
-                <option th:each="permission : ${permissions}"
-                        th:value="${permission}"
-                        th:text="${permission.getType()}"></option>
-            </select>
-            <input type="file" name="file" accept="image/*" multiple>
-            <!--                <span class="file-input-label">Виберіть зображення</span>-->
-            <!--                <svg class="file-input-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">-->
-            <!--                    <path d="M10 10H6L8 14L12 10H8Z" />-->
-            <!--                    <path d="M2 10C2 6.68629 4.68629 4 8 4C11.3137 4 14 6.68629 14 10C14 13.3137 11.3137 16 8 16C4.68629 16 2 13.3137 2 10Z" />-->
-            <!--                </svg>-->
-            <!--            <div class="image-preview"></div>-->
+    <main class="main">
+        <section class="side-content">
+            <div th:replace="~{blocks/sidebar-for-participant.html :: sidebar-participant}"></div>
+            <div th:replace="~{blocks/sidebar-for-participant.html :: sidebar-hidden}"></div>
+        </section>
+        <section class="content post-add">
+            <h3 class="heading3">Про що буде ваш допис?</h3>
+            <hr>
+            <form class="post-add-form" action="/my/users/post/add" method="post" enctype="multipart/form-data">
+                <p>Додати зображення:</p>
+                <div class="custom__image-container">
+                    <label id="add-img-label" for="add-single-img">+</label>
+                    <input type="file" id="add-single-img" accept="image/*" />
+                </div>
+                <input
+                        type="file"
+                        id="image-input"
+                        name="file"
+                        accept="image/*"
+                        multiple
+                />
+                <br/>
+                <select name="type" class="form-select">
+                    <option th:each="permission : ${permissions}"
+                            th:value="${permission}"
+                            th:text="${permission.getType()}"></option>
+                </select><br>
+<!--                <input type="file" name="file" accept="image/*" multiple>-->
 
-            <textarea name="content" class="form-control"></textarea>
-            <br>
-            <button type="submit" class="btn btn-success">Додати допис</button>
-        </form>
-    </div>
+                <textarea placeholder="Розказати про..." name="content" class="form-control"></textarea>
+                <br>
+                <button type="submit">Зберегти</button>
+            </form>
+        </section>
+    </main>
     <div th:replace="~{blocks/footer.html :: footer}"></div>
 </div>
+<script>
+    const imgInputHelper = document.getElementById("add-single-img");
+    const imgInputHelperLabel = document.getElementById("add-img-label");
+    const imgContainer = document.querySelector(".custom__image-container");
+    const imgFiles = [];
+
+    const addImgHandler = () => {
+        const file = imgInputHelper.files[0];
+        if (!file) return;
+        // Generate img preview
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+            const newImg = document.createElement("img");
+            newImg.src = reader.result;
+            imgContainer.insertBefore(newImg, imgInputHelperLabel);
+        };
+        // Store img file
+        imgFiles.push(file);
+        // Reset image input
+        imgInputHelper.value = "";
+        return;
+    };
+    imgInputHelper.addEventListener("change", addImgHandler);
+
+    const getImgFileList = (imgFiles) => {
+        const imgFilesHelper = new DataTransfer();
+        imgFiles.forEach((imgFile) => imgFilesHelper.items.add(imgFile));
+        return imgFilesHelper.files;
+    };
+    const customFormSubmitHandler = (ev) => {
+        const firstImgInput = document.getElementById("image-input");
+        firstImgInput.files = getImgFileList(imgFiles);
+        // Submit the form
+        document.querySelector(".post-add-form").submit();
+        ev.preventDefault(); // Prevent default form submission (optional)
+    };
+
+    document
+        .querySelector(".post-add-form")
+        .addEventListener("submit", customFormSubmitHandler);
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>

@@ -35,6 +35,18 @@ public class PostController {
         return Permission.values();
     }
 
+    @GetMapping("/my/posts")
+    public String getMyPosts(Model model, Principal principal) {
+        String username = principal.getName();
+        Optional<User> userOptional = userRepository.findByEmail(username);
+        userOptional.ifPresent(user -> {
+            List<Post> posts = postRepository.findByUserId(user.getId());
+            model.addAttribute("user", user);
+            model.addAttribute("posts", posts);
+        });
+        return "for-participants/my-posts";
+    }
+
     @GetMapping("/my/users/{userId}/posts")
     //@PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String getUserPosts(@PathVariable(value = "userId") Long userId, Model model) {
@@ -46,28 +58,31 @@ public class PostController {
         });
         return "for-participants/user-posts";
     }
-    // не чіпати
-    @GetMapping("/my/users/{userId}/post/add")
-    public String addPostForm(@PathVariable(value = "userId") Long userId, Model model, Principal principal){
-        model.addAttribute("userId", userId);
+
+    @GetMapping("/my/users/post/add")
+    public String addPostForm(//@PathVariable(value = "userId") Long userId,
+                              Model model, Principal principal){
+
+        //model.addAttribute("userId", userId);
         model.addAttribute("user", principal.getName());
         return "post-add";
     }
-    // не чіпати
-    @PostMapping("/my/users/{userId}/post/add")
-    public String postAdding(@PathVariable(value = "userId") Long userId,
+
+    @PostMapping("/my/users/post/add")
+    public String postAdding(//@PathVariable(value = "userId") Long userId,
                              Post post, Principal principal,
                              @RequestParam("file") MultipartFile[] files,
                              Model model) throws IOException {
-        model.addAttribute("userId", userId);
-//        Optional<User> user = userRepository.findById(userId);
-//        if(user.isPresent()){
-//            User res = user.get();
-//            post.setUser(res);
-//        }
-        if (files != null && files.length > 0 && files.length <= 10) {
-            postService.addPost(principal, post, files);
-        }
+//        String username = principal.getName();
+//        Optional<User> userOptional = userRepository.findByEmail(username);
+
+//        if (userOptional.isPresent()) {
+//            User user = userOptional.get();
+            //post.setUser(user);
+            if (files != null && files.length > 0 && files.length <= 10) {
+                postService.addPost(principal, post, files);
+           }
+
         return "redirect:/my/users";
     }
 
@@ -81,27 +96,7 @@ public class PostController {
         });
         return "post-edit";
     }
-//    @PostMapping("/my/posts/{postId}/edit")
-//    public RedirectView editPost(@PathVariable(value = "postId") Long postId,
-//                                 @RequestParam(value = "file", required = false) MultipartFile[] files,
-//                                 Post post,
-//                                 //@RequestParam String content, @RequestParam String type,
-//                                 RedirectAttributes redirectAttributes) throws IOException{
-//
-////        User user = postRepository.findById(postId).get().getUser();
-////        post.setUser(user);
-////        post.setContent(content);
-////        Permission permission = Permission.valueOf(type.toUpperCase());
-////        post.setType(permission);
-//        postService.editPost(post);
-//        Long userId = post.getUser().getId();
-//        redirectAttributes.addAttribute("userId", userId);
-//        RedirectView rv = new RedirectView();
-//        rv.setContextRelative(true);
-//        rv.setUrl("/my/users/{userId}/posts");
-//        return rv;
-//    }
-    // працює
+
     @PostMapping("/my/posts/{postId}/edit")
     public RedirectView editPost(@PathVariable(value = "postId") Long postId,
                                  @RequestParam(value = "file", required = false) MultipartFile[] files,
@@ -137,15 +132,4 @@ public class PostController {
         rv.setUrl("/my/users/{userId}/posts");
         return rv;
     }
-
-//    @PostMapping("/my/posts/{postId}/like")
-//    public ResponseEntity<LikeResponse> likePost(@PathVariable Long postId, Principal principal) {
-//        LikeResponse response = postService.likePost(postId, (User) principal);
-//        if (response.isSuccess()) {
-//            return ResponseEntity.ok(response);
-//        } else {
-//            return ResponseEntity.badRequest().body(response);
-//        }
-//    }
-
 }

@@ -25,31 +25,38 @@ public class ParticipantController {
         this.userRepository = userRepository;
         this.userService = userService;
     }
+//    @GetMapping
+//    public String getSignOutPrePage(Model model) {
+//
+//
+//        return "pre-logout";
+//    }
 
     @ModelAttribute("genders")
     public Gender[] getGenders(){
         return Gender.values();
     }
-    @GetMapping("/my/users")
-    public String getParticipants(@RequestParam(name = "query", required = false) String query, Model model, Principal principal) {
 
+    @GetMapping("/my/users")
+    public String getParticipants(@RequestParam(name = "query", required = false) String query,
+                                  Model model, Principal principal) {
         List<User> users;
         if (query != null && !query.isEmpty()) {
             users = userRepository.findByNameStartingWithIgnoreCaseOrSurnameStartingWithIgnoreCaseOrFullNameStartingWithIgnoreCase(query, query, query);
         } else {
             users = userRepository.findAll();
         }
-
         model.addAttribute("users", users);
         model.addAttribute("user", principal);
         return "for-participants/users";
     }
     @GetMapping("/registration")
-    public String registration(Model model){
+    public String registrationForm(Model model){
         return "regForm";
     }
+
     @PostMapping("/registration")
-    public String authorization(User user, Model model){
+    public String registering(User user, Model model){
         if (!userService.createUser(user)) {
             model.addAttribute("error", "Користувач з електронною поштою " + user.getEmail() + " вже існує");
             return "regForm";

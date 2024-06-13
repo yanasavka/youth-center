@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Setter
@@ -27,10 +28,19 @@ public class Task {
 
     @Column(nullable = false)
     private LocalDateTime deadline;
+    @JoinColumn
+    @ManyToOne
+    private User sender;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn
     private User assignedTo;
+
+    @Column(updatable = false, nullable = false, columnDefinition = "timestamp default current_timestamp")
+    private LocalDateTime createdAt;
+
+    @Column(columnDefinition = "timestamp null default current_timestamp on update current_timestamp")
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     @JoinColumn
@@ -39,6 +49,10 @@ public class Task {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     public Task() {}
 

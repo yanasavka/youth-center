@@ -1,3 +1,17 @@
-<aside th:fragment="sidebar-manager">
-
+<aside th:fragment="sidebar-manager" class="sidebarMenu sidebar-manager">
+    <nav>
+        <ul>
+            <li><a href="">Профіль</a></li>
+            <li><a href="/my/posts">Дописи</a></li>
+            <li><a href="">Чати</a></li>
+            <li><a href="/my/volunteer/projects">Проекти</a></li>
+            <li><a href="/my/events">Події</a></li>
+            <li><a href="">Заявки</a></li>
+            <li><a href="">Налаштування</a></li>
+            <li><a href="">Вийти</a></li>
+        </ul>
+    </nav>
+</aside>
+<aside th:fragment="sidebar-hidden" class="sidebar-hidden sidebarMenu">
+    <img class="arrow" src="/static/img/бокова_пташка.svg" alt="">
 </aside>

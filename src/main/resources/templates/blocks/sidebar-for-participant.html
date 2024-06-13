@@ -1,9 +1,9 @@
-<aside th:fragment="sidebar-participant" class="sidebar-participant">
+<aside th:fragment="sidebar-participant" class="sidebar-participant sidebarMenu">
     <nav>
         <ul>
-            <li><a href="">Мій профіль</a></li>
-            <li><a href="">Мої дописи</a></li>
-            <li><a href=""></a></li>
+            <li><a href="">Профіль</a></li>
+            <li><a href="/my/posts">Дописи</a></li>
+            <li><a href="">Чати</a></li>
             <li><a href=""></a></li>
             <li><a href=""></a></li>
             <li><a href="">Налаштування</a></li>
@@ -11,6 +11,6 @@
         </ul>
     </nav>
 </aside>
-<aside th:fragment="sidebar-hidden" class="sidebar-hidden">
-    <img src="/static/img/бокова_пташка.png" alt="">
+<aside th:fragment="sidebar-hidden" class="sidebar-hidden sidebarMenu">
+    <img class="arrow" src="/static/img/бокова_пташка.svg" alt="">
 </aside>

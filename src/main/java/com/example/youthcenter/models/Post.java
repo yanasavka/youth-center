@@ -2,16 +2,12 @@ package com.example.youthcenter.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -54,9 +50,6 @@ public class Post {
     private List<Image> images = new ArrayList<>();
 
     private Long previewImageId;
-
-//    @OneToMany
-//    private Set<User> likedBy = new HashSet<>();
 
     @PrePersist
     protected void onCreate() {

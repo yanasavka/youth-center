@@ -17,18 +17,21 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public PostService(PostRepository postRepository, UserRepository userRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository, UserService userService) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.userService = userService;
     }
     public Post getPostById(Long id){
         return postRepository.findById(id).orElse(null);
     }
+
     public void addPost(Principal principal,
                         Post post, MultipartFile[] imageFiles) throws IOException {
-        post.setUser(getUserByPrincipal(principal).orElse(null));
+        post.setUser(userService.getUserByPrincipal(principal).orElse(null));
         Image[] images = new Image[10];
         for (int i = 0; i < imageFiles.length; i++){
             if(imageFiles[i].getSize() != 0){
@@ -38,15 +41,9 @@ public class PostService {
         }
 
         images[0].setPreviewImage(true);
-
         Post postFromDB = postRepository.save(post);
         postFromDB.setPreviewImageId(postFromDB.getImages().get(0).getId());
         postRepository.save(post);
-    }
-
-    public Optional<User> getUserByPrincipal(Principal principal) {
-        if(principal == null) return Optional.of(new User());
-        return userRepository.findByEmail(principal.getName());
     }
 
     public void editPost(Post post){
